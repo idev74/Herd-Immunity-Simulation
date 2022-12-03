@@ -1,8 +1,9 @@
 class Logger(object):
     def __init__(self, file_name):
+        self.file_name = file_name
         # TODO:  Finish this initialization method. The file_name passed should be the
         # full file name of the file that the logs will be written to.
-        pass
+        
 
     # The methods below are just suggestions. You can rearrange these or 
     # rewrite them to better suit your code style. 
@@ -22,6 +23,8 @@ class Logger(object):
 
     def write_metadata(self, pop_size, vacc_percentage, virus_name, mortality_rate,
                        basic_repro_num):
+
+                    #    f = open(self.file_name 'a')
         # TODO: Finish this method. This line of metadata should be tab-delimited
         # it should create the text file that we will store all logs in.
         # TIP: Use 'w' mode when you open the file. For all other methods, use

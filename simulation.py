@@ -7,6 +7,13 @@ from virus import Virus
 
 class Simulation(object):
     def __init__(self, virus, pop_size, vacc_percentage, initial_infected=1):
+        self.virus = virus
+        self.pop_size = pop_size
+        self.vacc_percentage = vacc_percentage
+        self.initial_infected = initial_infected
+        self.logger = Logger('Logfile')
+        self.people = self._create_population()
+        self.newly_infected = []
         # TODO: Create a Logger object and bind it to self.logger.
         # Remember to call the appropriate logger method in the corresponding parts of the simulation.
         
@@ -30,6 +37,7 @@ class Simulation(object):
         pass
 
     def _simulation_should_continue(self):
+        survivors = len(self.people)
         # This method will return a booleanb indicating if the simulation 
         # should continue. 
         # The simulation should not continue if all of the people are dead, 
@@ -57,6 +65,7 @@ class Simulation(object):
         # TODO: Write meta data to the logger. This should be starting 
         # statistics for the simulation. It should include the initial
         # population size and the virus. 
+        
         
         # TODO: When the simulation completes you should conclude this with 
         # the logger. Send the final data to the logger. 
