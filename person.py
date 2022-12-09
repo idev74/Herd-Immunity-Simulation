@@ -7,17 +7,19 @@ class Person(object):
         self._id = _id  # int
         self.is_vaccinated = is_vaccinated
         self.infection = infection
-        self.is_alive = self.did_survive_infection() # died, didsurvive, etc
+        self.is_alive = True
+        # self.did_survive_infection() # died, didsurvive, etc
 
     def did_survive_infection(self):
-        if self.infection != None:
+        if self.infection:
             check_survival = random.randint(0.0, 1.0)
             if check_survival < self.infection.mortality_rate:
+                self.is_alive = False
                 return False
             else:
                 self.is_vaccinated = True
                 return True
-        return True
+        # return True
 
 
 if __name__ == "__main__":
