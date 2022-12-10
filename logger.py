@@ -38,10 +38,10 @@ class Logger(object):
         # exactly what happened in the interaction and create a String, and write to your logfile.
 
     def log_infection_survival(self, step_number, population_count, number_of_new_fatalities):
-        deaths = 0
-        for fatality in number_of_new_fatalities:
-            if not fatality.is_alive:
-                deaths += 1
+        # deaths = 0
+        # for fatality in number_of_new_fatalities:
+        #     if not fatality.is_alive:
+        #         deaths += 1
 
         f = open(self.file_name, 'a')
         f.write(

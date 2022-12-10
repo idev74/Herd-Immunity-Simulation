@@ -17,6 +17,7 @@ class Simulation(object):
         self.death_count = 0
         self.time_step_counter = 0
         self.people = self._create_population()
+        self.num_immune = 0
         # TODO: Create a Logger object and bind it to self.logger.
         # Remember to call the appropriate logger method in the corresponding parts of the simulation.
         
@@ -29,6 +30,7 @@ class Simulation(object):
         # Use the _create_population() method to create the list and 
         # return it storing it in an attribute here. 
         # TODO: Call self._create_population() and pass in the correct parameters.
+        
 
     def _create_population(self):
         # TODO: Create a list of people (Person instances). This list 
@@ -39,7 +41,6 @@ class Simulation(object):
         num_vaccinated = int(self.pop_size * self.vacc_percentage)
         num_unvaccinated = int(self.pop_size - num_vaccinated)
         people = []
-        infected = 0
         id = 0
         infected = self.initial_infected
 
@@ -83,10 +84,11 @@ class Simulation(object):
             # TODO: for every iteration of this loop, call self.time_step() 
             # Call the _simulation_should_continue method to determine if 
             # the simulation should continue
-            should_continue = self._simulation_should_continue()
             time_step_counter += 1
+            print("time step counter", time_step_counter)
+            should_continue = self._simulation_should_continue()
             self.time_step(time_step_counter)
-        
+        self.logger.log_interactions(time_step_counter, self.total_interactions, len(self.newly_infected))
         print(f'Step {time_step_counter}:\nNumber Infected: {len(self.newly_infected)}')
             
 
@@ -114,7 +116,7 @@ class Simulation(object):
 
                 if person.did_survive_infection() == True:
                     person.is_vaccinated = True
-                    self.num_vaccinated += 1
+                    self.num_immune += 1
                 else:
                     person.is_alive = False
                     self.death_count += 1
@@ -144,7 +146,6 @@ class Simulation(object):
                 if random_person not in self.newly_infected:
                     self.newly_infected.append(random_person)
 
-        self.logger.log_interactions(self.time_step_counter, self.total_interactions, len(self.newly_infected))
 
     def _infect_newly_infected(self):
         # TODO: Call this method at the end of every time step and infect each Person.
