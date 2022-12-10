@@ -1,2 +1,3 @@
-Population: 1000 people 	 Percent Vaccinated 0.1 	 Virus Name: Sniffles 	 Mortality Rate: 0.12 	 Basic Reproduction Number 0.5
-Step No.: 1 	 Interactions: 1000 	 New Infections: 352
+Population: 2000 people 	 Percent Vaccinated 0.1 	 Virus Name: Sniffles 	 Mortality Rate: 0.12 	 Basic Reproduction Number 0.5
+Step No.: 1 	 Interactions: 2000 	 New Infections: 0
+Survivors: 1139 	 Deaths: 1 	 Vaccinated: 262 	 Number of steps: 1 	 Infected: 0

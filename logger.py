@@ -59,3 +59,9 @@ class Logger(object):
             f'Time Step No.: {time_step_number}'
         )
         f.close()
+
+    def log_final_data(self, population, dead, vaccinated, time_steps, infected):
+        f = open(self.file_name, 'a')
+        f.write(
+            f'Survivors: {population} \t Deaths: {dead} \t Vaccinated: {vaccinated} \t Number of steps: {time_steps} \t Infected: {infected}'
+        )

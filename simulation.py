@@ -18,6 +18,7 @@ class Simulation(object):
         self.time_step_counter = 0
         self.people = self._create_population()
         self.num_immune = 0
+        self.total_infected = 0
         # TODO: Create a Logger object and bind it to self.logger.
         # Remember to call the appropriate logger method in the corresponding parts of the simulation.
         
@@ -88,9 +89,10 @@ class Simulation(object):
             print("time step counter", time_step_counter)
             should_continue = self._simulation_should_continue()
             self.time_step(time_step_counter)
-        self.logger.log_interactions(time_step_counter, self.total_interactions, len(self.newly_infected))
-        print(f'Step {time_step_counter}:\nNumber Infected: {len(self.newly_infected)}')
-            
+
+        self.logger.log_interactions(time_step_counter, self.total_interactions, self.total_infected)
+        print(f'Step {time_step_counter}:\nNumber Infected: {self.total_infected}')
+        self.logger.log_final_data(len(self.people), self.death_count, self.num_immune + self.vaccine_saved, time_step_counter, self.total_infected) 
 
         # TODO: Write meta data to the logger. This should be starting 
         # statistics for the simulation. It should include the initial
@@ -112,7 +114,7 @@ class Simulation(object):
         for person in self.people:
             if person.infection and person.is_alive:
                 for i in range(100):
-                    self.interaction(person, random.choice(self.people), time_step_counter)
+                    self.interaction(person, self.random_person(), time_step_counter)
 
                 if person.did_survive_infection() == True:
                     person.is_vaccinated = True
@@ -120,13 +122,20 @@ class Simulation(object):
                 else:
                     person.is_alive = False
                     self.death_count += 1
+    
+    def random_person(self):
+        rand_person = random.choice(self.people)
+        while not rand_person.is_alive and not rand_person.is_vaccinated:
+            rand_person = random.choice(self.people)
+        return rand_person
+
 
     def interaction(self, infected_person, random_person, time_step_counter):
         # TODO: Finish this method.
         time_step_counter += 1
         assert infected_person.is_alive == True
         assert random_person.is_alive == True
-        self.total_interactions +=1
+        self.total_interactions += 1
         random_num = random.random()
         # The possible cases you'll need to cover are listed below:
             # random_person is vaccinated:
@@ -142,9 +151,10 @@ class Simulation(object):
         if random_person.is_vaccinated is True:
             self.vaccine_saved += 1
         elif random_person.is_vaccinated is False and random_person.infection is None:
-            if random_num > repro_rate:
-                if random_person not in self.newly_infected:
-                    self.newly_infected.append(random_person)
+            if random_num < repro_rate:
+                self.newly_infected.append(random_person)
+                self.people.remove(random_person)
+                
 
 
     def _infect_newly_infected(self):
@@ -152,8 +162,9 @@ class Simulation(object):
         # TODO: Once you have iterated through the entire list of self.newly_infected, remember
         # to reset self.newly_infected back to an empty list.
         for infected in self.newly_infected:
-            infected.infection is virus
-            self.newly_infected.append(infected)
+            infected.infection is self.virus
+            self.people.append(infected)
+            self.total_infected += 1
         self.newly_infected = []
 
 
@@ -165,9 +176,9 @@ if __name__ == "__main__":
     # virus = Virus(virus_name, repro_num, mortality_rate)
 
     # Set some values used by the simulation
-    pop_size = 1000
+    pop_size = 2000
     vacc_percentage = 0.1
-    initial_infected = 10
+    initial_infected = 20
 
     # Make a new instance of the simulation
     virus = Virus(virus_name, repro_rate, mortality_rate)
