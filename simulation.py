@@ -87,9 +87,9 @@ class Simulation(object):
             self.time_step_counter += 1
             print("time step counter", self.time_step_counter)
             should_continue = self._simulation_should_continue()
+            self.logger.log_interactions(self.time_step_counter, self.total_interactions, self.total_infected)
             # self.time_step(time_step_counter)
 
-        self.logger.log_interactions(self.time_step_counter, self.total_interactions, self.total_infected)
         print(f'Step {self.time_step_counter}:\nNumber Infected: {self.total_infected}')
         self.logger.log_final_data(len(self.people), self.death_count, self.num_immune + self.vaccine_saved, self.time_step_counter, self.total_infected) 
 
@@ -122,7 +122,8 @@ class Simulation(object):
                     person.is_alive = False
                     self.death_count += 1
         self._infect_newly_infected()
-    
+
+
     def random_person(self):
         rand_person = random.choice(self.people)
         while not rand_person.is_alive and not rand_person.is_vaccinated:
