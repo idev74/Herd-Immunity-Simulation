@@ -18,11 +18,11 @@ class Logger(object):
     #   The population size, the number of living, the number of dead, the number 
     #   of vaccinated, and the number of steps to reach the end of the simulation. 
 
-    def write_metadata(self, pop_size, vacc_percentage, virus_name, mortality_rate, basic_repro_num):
+    def write_metadata(self, pop_size, vacc_percentage, virus):
 
         f = open(self.file_name, 'w') # maybe 'w'?
         f.write(
-            f'Population: {pop_size} people \t Percent Vaccinated {vacc_percentage} \t Virus Name: {virus_name} \t Mortality Rate: {mortality_rate} \t Basic Reproduction Number {basic_repro_num}\n'
+            f'Population: {pop_size} people \t Percent Vaccinated {vacc_percentage} \t Virus Name: {virus.name} \t Mortality Rate: {virus.mortality_rate} \t Basic Reproduction Number {virus.repro_rate}\n'
         )
         f.close()
 

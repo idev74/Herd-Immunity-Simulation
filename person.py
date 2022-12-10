@@ -12,7 +12,7 @@ class Person(object):
 
     def did_survive_infection(self):
         if self.infection:
-            check_survival = random.randint(0.0, 1.0)
+            check_survival = random.random()
             if check_survival < self.infection.mortality_rate:
                 self.is_alive = False
                 return False
