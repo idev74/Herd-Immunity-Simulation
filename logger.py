@@ -29,7 +29,7 @@ class Logger(object):
     def log_interactions(self, step_number, number_of_interactions, number_of_new_infections):
         f = open(self.file_name, 'a')
         f.write(
-            f'Step No.: {step_number} \t Interactions: {number_of_interactions} \t New Infections: {number_of_new_infections}\n'
+            f'\nStep No.: {step_number} \nInteractions: {number_of_interactions} \nNew Infections: {number_of_new_infections}\n'
         )
         f.close()
         # TODO: Finish this method. Think about how the booleans passed (or not passed)
@@ -45,7 +45,7 @@ class Logger(object):
 
         f = open(self.file_name, 'a')
         f.write(
-            f'Step No.: {step_number} \t Population Count: {population_count} \t New Deaths: {number_of_new_fatalities}\n'
+            f'\nStep No.: {step_number} \nPopulation Count: {population_count} \nNew Deaths: {number_of_new_fatalities}\n'
         )
         f.close()
         # TODO: Finish this method. If the person survives, did_die_from_infection
@@ -56,12 +56,12 @@ class Logger(object):
     def log_time_step(self, time_step_number):
         f = open(self.file_name, 'a')
         f.write(
-            f'Time Step No.: {time_step_number}'
+            f'\nTime Step No.: {time_step_number}'
         )
         f.close()
 
     def log_final_data(self, population, dead, vaccinated, time_steps, infected):
         f = open(self.file_name, 'a')
         f.write(
-            f'Survivors: {population} \t Deaths: {dead} \t Vaccinated: {vaccinated} \t Number of steps: {time_steps} \t Infected: {infected}'
+            f'\nSurvivors: {population} \nDeaths: {dead} \nVaccinated: {vaccinated} \nNumber of steps: {time_steps} \nInfected: {infected}'
         )

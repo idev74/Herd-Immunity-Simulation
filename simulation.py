@@ -76,8 +76,6 @@ class Simulation(object):
         # This method starts the simulation. It should track the number of 
         # steps the simulation has run and check if the simulation should 
         # continue at the end of each step. 
-        self.time_step
-        time_step_counter = 0
         should_continue = True
 
         while should_continue:
@@ -85,14 +83,15 @@ class Simulation(object):
             # TODO: for every iteration of this loop, call self.time_step() 
             # Call the _simulation_should_continue method to determine if 
             # the simulation should continue
-            time_step_counter += 1
-            print("time step counter", time_step_counter)
+            self.time_step()
+            self.time_step_counter += 1
+            print("time step counter", self.time_step_counter)
             should_continue = self._simulation_should_continue()
-            self.time_step(time_step_counter)
+            # self.time_step(time_step_counter)
 
-        self.logger.log_interactions(time_step_counter, self.total_interactions, self.total_infected)
-        print(f'Step {time_step_counter}:\nNumber Infected: {self.total_infected}')
-        self.logger.log_final_data(len(self.people), self.death_count, self.num_immune + self.vaccine_saved, time_step_counter, self.total_infected) 
+        self.logger.log_interactions(self.time_step_counter, self.total_interactions, self.total_infected)
+        print(f'Step {self.time_step_counter}:\nNumber Infected: {self.total_infected}')
+        self.logger.log_final_data(len(self.people), self.death_count, self.num_immune + self.vaccine_saved, self.time_step_counter, self.total_infected) 
 
         # TODO: Write meta data to the logger. This should be starting 
         # statistics for the simulation. It should include the initial
@@ -101,7 +100,7 @@ class Simulation(object):
         # TODO: When the simulation completes you should conclude this with 
         # the logger. Send the final data to the logger. 
 
-    def time_step(self, time_step_counter):
+    def time_step(self):
         # This method will simulate interactions between people, calulate 
         # new infections, and determine if vaccinations and fatalities from infections
         # The goal here is have each infected person interact with a number of other 
@@ -114,7 +113,7 @@ class Simulation(object):
         for person in self.people:
             if person.infection and person.is_alive:
                 for i in range(100):
-                    self.interaction(person, self.random_person(), time_step_counter)
+                    self.interaction(person, self.random_person())
 
                 if person.did_survive_infection() == True:
                     person.is_vaccinated = True
@@ -122,6 +121,7 @@ class Simulation(object):
                 else:
                     person.is_alive = False
                     self.death_count += 1
+        self._infect_newly_infected()
     
     def random_person(self):
         rand_person = random.choice(self.people)
@@ -130,9 +130,9 @@ class Simulation(object):
         return rand_person
 
 
-    def interaction(self, infected_person, random_person, time_step_counter):
+    def interaction(self, infected_person, random_person):
         # TODO: Finish this method.
-        time_step_counter += 1
+        self.time_step_counter += 1
         assert infected_person.is_alive == True
         assert random_person.is_alive == True
         self.total_interactions += 1
@@ -154,8 +154,7 @@ class Simulation(object):
             if random_num < repro_rate:
                 self.newly_infected.append(random_person)
                 self.people.remove(random_person)
-                
-
+        
 
     def _infect_newly_infected(self):
         # TODO: Call this method at the end of every time step and infect each Person.
