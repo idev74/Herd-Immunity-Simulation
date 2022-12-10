@@ -1,0 +1,20 @@
+#1: What were the inputs you gave the simulation? (Population size, percent vaccinated, virus name, mortality rate, reproductive rate)
+
+Inputs for the Sniffles virus:
+Name = Sniffles
+Population size = 1000
+Vaccinated percentage = 1%
+Mortality rate: 12%
+Reproductive rate: 50%
+
+#2: What percentage of the population became infected at some point before the virus burned out?
+
+////% became infected with the virus.
+
+#3: What percentage of the population died from the virus?
+
+////% of the population died from the virus.
+
+#4: Out of all interactions sick individuals had during the entire simulation, how many times, in total, did a vaccination save someone from potentially becoming infected?
+
+A vaccination saved /////// in total.

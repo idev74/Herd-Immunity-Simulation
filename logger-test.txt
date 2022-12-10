@@ -1,0 +1,11 @@
+Population: 2000 people 	 Percent Vaccinated 0.1 	 Virus Name: Sniffles 	 Mortality Rate: 1.0 	 Basic Reproduction Number 0.5
+
+Step No.: 2001 
+Interactions: 2000 
+New Infections: 867
+
+Survivors: 2020 
+Deaths: 20
+Vaccinated: 278 
+Number of steps: 2001 
+Infected: 867
